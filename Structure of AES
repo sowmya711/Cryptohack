@@ -1,0 +1,20 @@
+import numpy as np
+def conversion(l):
+    new_list = []
+    for i in l:
+        for j in i:
+            new_list.append(j)
+    return new_list
+def matrix2bytes(matrix):
+    l=matrix.tolist()
+    x=conversion(l)
+    print(bytes(x))
+    
+matrix = np.matrix([
+    [99, 114, 121, 112],
+    [116, 111, 123, 105],
+    [110, 109, 97, 116],
+    [114, 105, 120, 125],
+])
+
+matrix2bytes(matrix)
