@@ -1,0 +1,11 @@
+from PIL import Image,ImageChops
+import numpy as np
+import cv2
+import climage
+im1 = Image.open('lemur.png')
+im2 = Image.open('flag.png')
+im1 = im1.convert("1")
+im2 = im2.convert("1")
+im4 = ImageChops.logical_xor(im1,im2)
+im4.save("/home/sowmya_02/cryptohack/general/im4.png")
+#needs modification
