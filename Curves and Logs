@@ -1,0 +1,44 @@
+from Crypto.Util.number import inverse
+import math
+import hashlib
+def pt_add(p,q,E):
+	zero=(0,0)
+	if(p==zero):
+		return q;
+	elif(q==zero):
+		return p;
+	else:
+		(x1,y1)=p
+		(x2,y2)=q
+	if(x1==x2 and y1==(-y2)):
+		return 0;
+	else:
+		if(p!=q):
+			lam=((y2-y1)*inverse(x2 - x1, E['p']))
+		if(p==q):
+			lam=((3*(x1**2)+E['a'])*inverse(2 * y1, E['p']))
+		x3=(lam**2-x1-x2)%E['p']
+		y3=(lam*(x1-x3)-y1)	%E['p']
+		Q=(x3,y3)
+		
+		return Q
+def scalar_mul(P,E,NB):
+	Q=P
+	R=(0,0)
+	while(NB>0):
+		if(NB%2==1):
+			R=pt_add(R,Q,E)
+		Q=pt_add(Q,Q,E)	
+		NB=(NB//2)
+			
+	return R
+E={'a':497,'b':1768,'p':9739}
+G=(1804,5368)
+QA = (815, 3190)
+NB = 1829
+R=scalar_mul(QA,E,NB)
+print(R)
+(x1,x2)=R
+x1=str(x1)
+result = (hashlib.sha1(x1.encode()).hexdigest())
+print(result)
