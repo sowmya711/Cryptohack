@@ -1,0 +1,30 @@
+from Crypto.Util.number import inverse
+def pt_add(p,q,E):
+	zero=(0,0)
+	if(p==zero):
+		return q;
+	elif(q==zero):
+		return p;
+	else:
+		(x1,y1)=p
+		(x2,y2)=q
+	if(x1==x2 and y1==(-y2)):
+		return 0;
+	else:
+		if(p!=q):
+			lam=((y2-y1)*inverse(x2 - x1, E['p']))
+		if(p==q):
+			lam=((3*(x1**2)+E['a'])*inverse(2 * y1, E['p']))
+		x3=(lam**2-x1-x2)%E['p']
+		y3=(lam*(x1-x3)-y1)	%E['p']
+		return x3,y3
+P = (493, 5564)
+Q = (1539, 4742)
+R = (4403,5202)
+E = {'a': 497, 'b': 1768, 'p': 9739}
+x = (5274, 2841)
+y = (8669, 740)
+s = pt_add(P, P, E)
+t = pt_add(s, Q, E)
+t1 = pt_add(t, R, E)
+print(str(t1[0]),str(t1[1]))
